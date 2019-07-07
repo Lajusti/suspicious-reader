@@ -19,7 +19,7 @@ Para la solución me he basado en un diseño en arquitectura hexagonal
 
 Dentro de cada dominio el código está separado en 3 partes:
 * **infrastructure**:
-  * IO en este caso únicamente desde un controller, pero podría ser un message broker o cualquier entrada de datos. 
+  * IO en este caso únicamente desde 2 controllers, pero podría ser un message broker o cualquier entrada de datos. 
   * Entidades que reciben las entradas, tanto para los XML como para los CSV.
   * Implementaciones de los converter para cada tipo de entrada.
   * Notificaciones que se envían al generarse el evento de aplicación "SuspiciousReading" en este caso simplemente se pintan por consola.
