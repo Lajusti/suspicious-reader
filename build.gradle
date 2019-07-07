@@ -1,0 +1,64 @@
+plugins {
+	id 'org.springframework.boot' version '2.1.6.RELEASE'
+	id 'java'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+group = 'lajusticia.alejandro'
+version = '1.0'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+}
+
+sourceSets {
+	functionalTests {
+		java {
+			srcDir 'src/functionalTests/java'
+			compileClasspath += main.output + test.output
+			runtimeClasspath += main.output + test.output
+		}
+		resources {
+			srcDir 'src/functionalTests/resources'
+		}
+	}
+}
+
+task functionalTests(type: Test) {
+	testClassesDirs = sourceSets.functionalTests.output.classesDirs
+	classpath = sourceSets.functionalTests.runtimeClasspath
+}
+
+test {
+	useJUnitPlatform()
+}
+
+functionalTests {
+	useJUnitPlatform()
+}
+
+configurations {
+	functionalTestsImplementation.extendsFrom testImplementation
+	functionalTestsCompile.extendsFrom testCompile
+}
+
+check.dependsOn functionalTests
+functionalTests.mustRunAfter test
+
+dependencies {
+	annotationProcessor("org.projectlombok:lombok:1.18.6")
+
+	implementation(
+			"org.springframework.boot:spring-boot-starter-web",
+			"org.projectlombok:lombok:1.18.6"
+	)
+
+	testImplementation(
+			"org.springframework.boot:spring-boot-starter-test",
+			"org.junit.jupiter:junit-jupiter-api:5.1.0",
+			"org.junit.jupiter:junit-jupiter-engine:5.1.0",
+			"org.mockito:junit-jupiter:2.20.0",
+	)
+}
